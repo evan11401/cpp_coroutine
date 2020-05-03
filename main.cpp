@@ -23,6 +23,12 @@ struct resumable::promise_type {
   auto get_return_object() {
     return coro_handle::from_promise(*this);
   }
+  void* operator new(std::size_t) noexcept {
+    return nullptr;   
+  }
+  static resumable get_return_object_on_allocation_failure(){
+    throw std::bad_alloc();   
+  }
   auto initial_suspend() { return std::experimental::suspend_always(); }
   auto final_suspend() { return std::experimental::suspend_always(); }
   void return_void() {}
