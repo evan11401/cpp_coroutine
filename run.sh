@@ -1,0 +1,1 @@
+g++ main.cpp -o main -std=c++2a -fcoroutines-ts 
