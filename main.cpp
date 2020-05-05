@@ -58,18 +58,18 @@ const char* resumable::recent_val(){return handle_.promise().string_;}
 //   std::cout << "Coroutine" << std::endl;
 // }
 // 2
-// resumable foo(){
-//   std::cout << "Hello" << std::endl;
-//   co_await std::experimental::suspend_always();
-//   co_return "Coroutine";
-// }
-// 3
 resumable foo(){
-  while(true){
-    co_yield "Hello";
-    co_yield "Coroutine";
-  }
+  std::cout << "Hello" << std::endl;
+  co_await std::experimental::suspend_always();
+  co_return "Coroutine";
 }
+// 3
+// resumable foo(){
+//   while(true){
+//     co_yield "Hello";
+//     co_yield "Coroutine";
+//   }
+// }
 // 1
 // int main(){
 //   resumable res = foo();
@@ -77,17 +77,17 @@ resumable foo(){
 // //   while (res.resume());
 // }
 // 2
-// int main(){
-//   resumable res = foo();
-//   while(res.resume());
-//   std::cout << res.return_val() << std::endl;
-// }
-// 3
-int main() {
+int main(){
   resumable res = foo();
-  int i=10;  
-  while (i--){
-    res.resume();
-    std::cout << res.recent_val() << std::endl;  
-  }
+  while(res.resume());
+  std::cout << res.return_val() << std::endl;
 }
+// 3
+// int main() {
+//   resumable res = foo();
+//   int i=10;  
+//   while (i--){
+//     res.resume();
+//     std::cout << res.recent_val() << std::endl;  
+//   }
+// }
